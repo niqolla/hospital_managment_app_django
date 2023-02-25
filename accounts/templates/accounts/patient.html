@@ -1,0 +1,144 @@
+{% extends 'accounts/main.html' %}
+
+    {% block content%}
+
+    <br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+           <h5>Patient</h5>
+           <p>ID: {{ patient }}</p>
+           <p>Name: {{ patient.name }}</p>
+           <p>Surname: {{ patient.surname }}</p>
+            <p>Email: {{patient.email}}</p>
+            <p>Phone: {{patient.number}}</p>
+            {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Admin' %}
+            <a class="btn btn-primary btn-sm btn-block" href="{% url 'update_patient' patient.id%}">Update</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body">
+           <h5>Allergies</h5>
+           <ul>
+            {% for al in allergies_of_patient %}
+                <li>{{al}}</li> 
+            {% endfor %}
+        </ul>
+        {% if request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
+        {% if allergy_entry %}
+        <p><a class="btn btn-primary btn-sm btn-block" href="{% url 'update_allergy' allergy_entry.id patient.id %}">Update allergies</a></p>
+        {% else %}
+        <p><a class="btn btn-primary btn-sm btn-block" href="{% url 'create_allergy' patient.id %}">Register allergies</a></p>
+        {% endif %}
+        {% endif %}
+            <h1 style="text-align: center;padding: 10px"></h1>
+        </div>
+    </div>
+    <div class="col-md">
+        <div class="card card-body">
+           <h5>Next appointment</h5>
+            <p>Date: {{ next_appointment.date }}</p>
+            <p>Doctor: {{ next_appointment.doctor.name }}</p>
+            {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
+            <p><a class="btn btn-primary btn-sm btn-block" href="{% url 'new_appointment' %}">Next Appointment</a></p>
+            {% endif %}
+            <h1 style="text-align: center;padding: 10px"></h1>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+     <div class="col">
+         <div class="card card-body">
+             <form method= "get">
+                {{ myFilter.form }}
+             <button class="btn btn-outline-info btn-sm btn-block" types="submit">Search</button>
+           </fora>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+</div>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            {% if request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
+            <a class="btn btn-primary btn-sm btn-block" href="{% url 'create_diagnosis' patient.id %}">Add Diagnosis</a>
+            {% endif %}
+            <table class= "table table-sm">
+                <tr>
+                    <th>Diagnosis</th>
+                    <th>Doctor</th>
+                    <th>Date</th>
+                    <th>Treatment</th>
+                    {% if request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
+                    <th>Update</th>
+                    {% endif %}
+                </tr>
+
+
+                    {% for entery in diag %}
+                    <tr>
+                        <td>{{ entery.diagnosis }}</td>
+                        <td>{{ entery.doctor.name }}</td>
+                        <td>{{ entery.date }}</td>
+                        <td>{{ entery.treatment }}</td>
+                        {% if request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
+                        <td><a class="btn btn-sm btn-info" href="{% url 'update_diagnosis' entery.id %}">Update</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
+            <a class="btn btn-primary btn-sm btn-block" href="{% url 'add_check_up' patient.id %}">Add Check UP</a>
+            {% endif %}
+            <table class= "table table-sm">
+                <tr>
+                    <th>Date</th>
+                    <th>Nurse</th>
+                    <th>Urgency</th>
+                    <th>Heart Rate</th>
+                    <th>Blood Presure</th>
+                    <th>Temperature</th>
+                    {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
+                    <th>Update</th>
+                    {% endif %}
+                </tr>
+
+                <tr>
+                    {% for i in check_up %}
+                    <td> {{ i.date }}</td>
+                    <td> {{ i.nurse.name }} </td>
+                    <td> {{ i.urgency }} </td>
+                    <td> {{ i.heart_rate }} </td>
+                    <td> {{ i.blood_presure }} </td>
+                    <td> {{ i.temperature }} </td>
+                    {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
+                    <td><a class="btn btn-sm btn-info" href="{% url 'update_checkup' i.id %}">Update</a></td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+    {% endblock %}

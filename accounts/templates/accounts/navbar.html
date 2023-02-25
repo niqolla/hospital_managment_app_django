@@ -1,0 +1,39 @@
+{% load static %}
+
+<style>
+  .hello-msg{
+    font-size: 18px;
+    margin-right: 20px;
+  }
+</style>
+
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+      <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" class="logo"></a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <ul class="navbar-nav">
+          {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Admin' %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home' %}">Dashboard</a>
+          </li>
+          {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'new_appointment' %}">Create an appointment</a>
+          </li>
+          {% endif %}
+          {% endif %}
+        </ul>
+      </div>
+
+      <span class="hello-msg">Hello, {{ request.user }}</span>
+      <span class="hello-msg"><a href="{% url 'logout' %}">Logout</a></span>
+
+  </nav>
+</div>

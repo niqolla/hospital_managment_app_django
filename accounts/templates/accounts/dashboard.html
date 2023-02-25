@@ -1,0 +1,154 @@
+{% extends 'accounts/main.html' %}
+
+    {% block content %}
+
+        {% include 'accounts/status.html' %}
+
+        <div class="container">
+            <!-- <div class="row"> -->
+                <div class="">
+                    <h5>Patients:</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card card-body">
+                                <form method= "get">
+                                    {{ patient_fil.form }}
+                                <button class="btn btn-outline-info btn-sm btn-block" types="submit">Search for patient</button>
+                              </form>
+                           </div>
+                       </div>
+                   </div>
+                    <div class="card card-body">
+                        {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Admin' %}
+                        <a class="btn btn-primary btn-sm btn-block" href="{% url 'create_patient' %}">Add Patient</a>
+                        {% endif %}
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Gender</th>
+                                <th>Birthday</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Admin' %}
+                                <th>Update</th>
+                                {% endif %}
+                            </tr>
+                            {% for patient in patients %}
+                                <tr>
+                                    <td><a class="btn btn-sm btn-info" href="{% url 'patient' patient.id %}">{{ patient }}</a></td>
+                                    <td>{{ patient.name }}</td>
+                                    <td>{{ patient.surname }}</td>
+                                    <td>{{ patient.gender }}</td>
+                                    <td>{{ patient.birthday }}</td>
+                                    <td>{{ patient.address }}</td>
+                                    <td>{{ patient.email }}</td>
+                                    <td>{{ patient.number }}</td>
+                                    {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Admin' %}
+                                    <td><a class="btn btn-sm btn-info" href="{% url 'update_patient' patient.id%}">Update</a></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <br><br>
+                <h5>Doctors:</h5>
+
+                    <hr>
+                    <div class="card card-body">
+                    <div class="container">
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Gender</th>
+                                <th>Birthday</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                            </tr>
+                            {% for member in d_staff %}
+                                <tr>
+                                    <td>{{ member }}</td>
+                                    <td>{{ member.name }}</td>
+                                    <td>{{ member.surname }}</td>
+                                    <td>{{ member.gender }}</td>
+                                    <td>{{ member.birthday }}</td>
+                                    <td>{{ member.address }}</td>
+                                    <td>{{ member.email }}</td>
+                                    <td>{{ member.department }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+
+                <h5>Nurses:</h5>
+                    <hr>
+                    <div class="card card-body">
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Gender</th>
+                                <th>Birthday</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                            </tr>
+                            {% for member in n_staff %}
+                                <tr>
+                                    <td>{{ member }}</td>
+                                    <td>{{ member.name }}</td>
+                                    <td>{{ member.surname }}</td>
+                                    <td>{{ member.gender }}</td>
+                                    <td>{{ member.birthday }}</td>
+                                    <td>{{ member.address }}</td>
+                                    <td>{{ member.email }}</td>
+                                    <td>{{ member.department }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <br><br>
+
+                <h5>Receptionists:</h5>
+                    <hr>
+                    <div class="card card-body">
+                        <table class="table">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Gender</th>
+                                <th>Birthday</th>
+                                <th>Address</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                            </tr>
+                            {% for member in r_staff %}
+                                <tr>
+                                    <td>{{ member }}</td>
+                                    <td>{{ member.name }}</td>
+                                    <td>{{ member.surname }}</td>
+                                    <td>{{ member.gender }}</td>
+                                    <td>{{ member.birthday }}</td>
+                                    <td>{{ member.address }}</td>
+                                    <td>{{ member.email }}</td>
+                                    <td>{{ member.department }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            <!-- </div> -->
+        </div>
+    
+    {% endblock %}
+

@@ -1,0 +1,1 @@
+# hospital_managment_app_django
