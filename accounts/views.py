@@ -14,6 +14,8 @@ from .models import *
 from .forms import *
 from .filters import *
 
+import csv
+
 ########################################################################
 #################### DASHBOARD  #####################################
 
@@ -59,20 +61,21 @@ def home(request):
 def patient(request, pk):
 
     patient = Patient.objects.get(id=pk)
+
     try:
-        allergy_entry = PatientHasAllergy.objects.get(patient=patient)
+        allergy_entry = PatientHasAllergy.objects.get(pid=patient)
     except PatientHasAllergy.DoesNotExist:
         allergy_entry = None
     # allergy_entry = PatientHasAllergy.objects.get(patient=patient)
 
     try:
-        patient_allergies = PatientHasAllergy.objects.filter(patient=patient)
+        patient_allergies = PatientHasAllergy.objects.filter(pid=patient)
         allergies = []
         for patient_allergy in patient_allergies:
             allergies.extend(patient_allergy.allergy.all())
     except PatientHasAllergy.DoesNotExist:
         allergies = []
-
+    print('ppp')
     try:
         next_appointment = NextAppointment.objects.filter(patient=patient).last()
     except NextAppointment.DoesNotExist:
@@ -299,6 +302,9 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
+            print(user.groups.all())
+            if 'Patient' in str(user.groups.all()):
+                return redirect('user-page')
             return redirect('home')
 
         else:
@@ -323,9 +329,19 @@ def logoutUser(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Patient'])
 def userPage(request):
-    patient = request.user.patient
-    diag = patient.pid.all()
+
+    try:
+        patient = request.user.patient
+    except:
+        return render(request, 'accounts/no_account.html')
+    
+    diag = patient.patient.all()
     check_up = patient.checkuppid.all()
-    context = {'patient':patient, 'diag':diag, 'check_up':check_up}
-    print('Diag', patient)
+    next_app = patient.patient_next_app.all()
+
+    context = {'patient':patient, 'diag':diag, 'check_up':check_up, 'next_app':next_app}
     return render(request, 'accounts/user.html', context)
+
+
+#######################################################################
+########################### _________ ################################

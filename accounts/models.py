@@ -32,7 +32,7 @@ class Patient(models.Model):
     email = models.EmailField(max_length=100, null = True, blank= True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     ##### CHANGE CASCADE WHEN WORKING!!!
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE, related_name='patient')
+    user = models.OneToOneField(User, null=True, blank= True, on_delete=models.CASCADE, related_name='patient')
     
     def __str__(self) -> str:
         return self.patient_id
@@ -113,7 +113,7 @@ class Diagnosis(models.Model):
 
 
 class PatientHasAllergy(models.Model):
-    patient = models.ForeignKey(Patient, null=True, on_delete=models.SET_NULL)
+    patient = models.ForeignKey(Patient, null=True, on_delete=models.SET_NULL, name='pid')
     allergy = models.ManyToManyField(Allergen)
 
     def __str__(self) -> str:
@@ -169,12 +169,12 @@ class PatientHasDiagnosis(models.Model):
 
 
 class NextAppointment(models.Model):
-    patient = models.ForeignKey(Patient,null=True, on_delete=models.SET_NULL)
-    doctor = models.ForeignKey(Staff,null=True, on_delete=models.SET_NULL, related_name = 'doctor')
+    patient = models.ForeignKey(Patient,null=True, on_delete=models.SET_NULL, related_name='patient_next_app')
+    staff = models.ForeignKey(Staff,null=True, on_delete=models.SET_NULL, related_name = 'staff')
     receptionits = models.ForeignKey(Staff,null=True, on_delete=models.SET_NULL, related_name='receptionist')
-    date = models.DateField()
+    date = models.DateTimeField()
 
     def __str__(self) -> str:
-        show_up = str(self.patient.name + " -- " + str(self.date) + " -- " + self.doctor.name)
+        show_up = str(self.patient.name + " -- " + str(self.date) + " -- " + self.staff.name)
         return show_up
     

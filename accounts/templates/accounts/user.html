@@ -2,7 +2,20 @@
 
     {% block content %}
 
-<h1>YOU ARE SICKK MY FRIEND!!!!!! AND I AM DYSLE-SICK!!!</h1>
+
+<br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <h5>Next appointment: </h5>
+                <p>{% for i in next_app %}
+                    {{ i.date }}
+                    {{ i.staff.name }}
+                    {% endfor %}</p>
+            </div>
+        </div>  
+    </div>
+<br>
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
@@ -13,7 +26,6 @@
                         <th>Date</th>
                         <th>Treatment</th>
                     </tr>
-    
     
                         {% for entery in diag %}
                         <tr>
@@ -30,7 +42,7 @@
         </div>
     </div>
     
-
+<br>
     <div class="row">
         <div class="col-md">
             <div class="card card-body">

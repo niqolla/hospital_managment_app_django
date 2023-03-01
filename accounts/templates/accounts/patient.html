@@ -40,7 +40,7 @@
         <div class="card card-body">
            <h5>Next appointment</h5>
             <p>Date: {{ next_appointment.date }}</p>
-            <p>Doctor: {{ next_appointment.doctor.name }}</p>
+            <p>Doctor: {{ next_appointment.staff.name }}</p>
             {% if request.user.groups.all.0.name == 'Receptionist' or request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
             <p><a class="btn btn-primary btn-sm btn-block" href="{% url 'new_appointment' %}">Next Appointment</a></p>
             {% endif %}
