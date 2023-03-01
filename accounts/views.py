@@ -17,6 +17,9 @@ from .filters import *
 ########################################################################
 #################### DASHBOARD  #####################################
 
+def start(request):
+    return render(request, 'accounts/medbook_html/index.html')
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse', 'Doctor', 'Receptionist'])
 def home(request):
