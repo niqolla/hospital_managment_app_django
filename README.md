@@ -63,7 +63,7 @@ Then it's the receptionist job to connect them to an account. (See roles --> Rec
 
 With this, the patient can see their medical history and print it (without the header and footer).
 
-[INSERT IMAGE]
+(See 'Patient log-in')
 
 ## Roles:
 
