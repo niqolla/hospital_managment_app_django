@@ -14,8 +14,6 @@ from .models import *
 from .forms import *
 from .filters import *
 
-import csv
-
 ########################################################################
 #################### DASHBOARD  #####################################
 

@@ -12,9 +12,13 @@
 
       <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" class="logo"></a>
 
+      {% if request.user.groups.all.0.name != 'Patient' %}
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
+      {% endif %}
 
       <div class="collapse navbar-collapse" id="navbarNav">
 
