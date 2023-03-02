@@ -67,6 +67,8 @@
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
+            <h5>Diagnosis</h5>
+
             {% if request.user.groups.all.0.name == 'Doctor' or request.user.groups.all.0.name == 'Admin' %}
             <a class="btn btn-primary btn-sm btn-block" href="{% url 'create_diagnosis' patient.id %}">Add Diagnosis</a>
             {% endif %}
@@ -104,6 +106,7 @@
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
+            <h5>Check-Ups</h5>
             {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
             <a class="btn btn-primary btn-sm btn-block" href="{% url 'add_check_up' patient.id %}">Add Check UP</a>
             {% endif %}
@@ -120,20 +123,21 @@
                     {% endif %}
                 </tr>
 
+                {% for i in check_up %}
+
                 <tr>
-                    {% for i in check_up %}
                     <td> {{ i.date }}</td>
                     <td> {{ i.nurse.name }} </td>
                     <td> {{ i.urgency }} </td>
                     <td> {{ i.heart_rate }} </td>
                     <td> {{ i.blood_presure }} </td>
                     <td> {{ i.temperature }} </td>
-                    {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
-                    <td><a class="btn btn-sm btn-info" href="{% url 'update_checkup' i.id %}">Update</a></td>
-                    {% endif %}
-                    {% endfor %}
+                        {% if request.user.groups.all.0.name == 'Nurse' or request.user.groups.all.0.name == 'Admin' %}
+                        <td><a class="btn btn-sm btn-info" href="{% url 'update_checkup' i.id %}">Update</a></td>
+                        {% endif %}
+
                 </tr>
-                
+                {% endfor %}              
 
             </table>
         </div>

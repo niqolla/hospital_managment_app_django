@@ -18,6 +18,7 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
+                <h5>Diagnosis</h5>
                 <table class= "table table-sm">
                     <tr>
                         <th>Diagnosis</th>
@@ -44,6 +45,7 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body">
+                <h5>Check-Ups</h5>
                 <table class= "table table-sm">
                     <tr>
                         <th>Date</th>
@@ -53,17 +55,18 @@
                         <th>Blood Presure</th>
                         <th>Temperature</th>
                     </tr>
-    
+
+                    {% for i in check_up %}    
                     <tr>
-                        {% for i in check_up %}
                         <td> {{ i.date }}</td>
                         <td> {{ i.nurse.name }} </td>
                         <td> {{ i.urgency }} </td>
                         <td> {{ i.heart_rate }} </td>
                         <td> {{ i.blood_presure }} </td>
                         <td> {{ i.temperature }} </td>
-                        {% endfor %}
                     </tr>
+                    {% endfor %}
+
                 </table>
             </div>
         </div>
