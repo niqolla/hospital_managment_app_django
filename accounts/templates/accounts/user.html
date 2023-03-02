@@ -2,7 +2,6 @@
 
     {% block content %}
 
-
 <br>
     <div class="row">
         <div class="col-md">
@@ -65,23 +64,16 @@
                         <td> {{ i.temperature }} </td>
                         {% endfor %}
                     </tr>
-    
                 </table>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md">
-                <div class="card card-body">
-                    <table class= "table table-sm">
-                    <div class="not-printable">
-                        <button onclick="window.print()">Print this page</button>
-                    </div>
-                    </table>    
-                </div>
-            </div>  
-        </div>
+    </div>
 
+
+    <br>
+    <div class="not-printable" style="text-align: right;">
+        <button  class="btn btn-sm btn-info" onclick="window.print()">Print this page</button>
     </div>
 
 {% endblock %}
