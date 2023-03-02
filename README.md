@@ -21,8 +21,8 @@ url: host:port/start/
 ![alt text](readme_pics/start_page2.png)
 
 ## admin (superuser) details: 
-username: nikola
-password: 123456789
+* username: nikola
+* password: 123456789
 
 For simplicity, password for any user I've created is: _R7$QmTS\:eN3t;k
 
