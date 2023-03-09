@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.views.decorators.csrf import requires_csrf_token
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
@@ -16,10 +17,11 @@ from .filters import *
 
 ########################################################################
 #################### DASHBOARD  #####################################
-
+@requires_csrf_token
 def start(request):
     return render(request, 'accounts/medbook_html/index.html')
 
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse', 'Doctor', 'Receptionist'])
 def home(request):
@@ -53,7 +55,7 @@ def home(request):
 
 ########################################################################
 #################### PATIENT PROFILE #####################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse', 'Doctor', 'Receptionist'])
 def patient(request, pk):
@@ -91,7 +93,7 @@ def patient(request, pk):
 
 ################################################################################
 ####### PATIENT = CREATE, UPDATE #########################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Receptionist'])
 def create_patient(request):
@@ -107,6 +109,7 @@ def create_patient(request):
     context = {'form':form}
     return render(request, 'accounts/patient_form.html', context)
 
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Receptionist'])
 def update_patient(request,pk):
@@ -126,7 +129,7 @@ def update_patient(request,pk):
 
 ################################################################################
 ####### DIGNOSIS = CREATE, UPDATE #########################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Doctor'])
 def create_diagnosis(request, pk):
@@ -150,7 +153,7 @@ def create_diagnosis(request, pk):
     context = {'form':form}
     return render(request, 'accounts/diagnosis_form.html', context)
 
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Doctor'])
 def update_diagnosis(request, pk):
@@ -169,7 +172,7 @@ def update_diagnosis(request, pk):
 
 ################################################################################
 ####### CHECK UP = CREATE, UPDATE #########################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse'])
 def create_checkup(request, pk):
@@ -187,7 +190,7 @@ def create_checkup(request, pk):
     context = {'form':form}
     return render(request, 'accounts/check_up_form.html', context)
 
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse'])
 def update_checkup(request, pk):
@@ -206,7 +209,7 @@ def update_checkup(request, pk):
 
 ####################################################################################3
 ########################### NEW APPOINTMENT ################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Doctor', 'Receptionist'])
 def create_appointment(request):
@@ -230,7 +233,7 @@ def create_appointment(request):
 
 ####################################################################################3
 ########################### ALLGRGENS ################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse', 'Doctor'])
 def create_allergy(request, p_id):
@@ -246,7 +249,7 @@ def create_allergy(request, p_id):
     context = {'form':form}
     return render(request, 'accounts/create_allergy.html', context)
 
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Admin', 'Nurse', 'Doctor'])
 def update_allergy(request, pk, p_id):
@@ -289,7 +292,7 @@ def registerPage(request):
 
 #######################################################################
 ########################### LOGIN ################################
-
+@requires_csrf_token
 @unathenticated_user
 def loginPage(request):
     if request.method == 'POST':
@@ -314,7 +317,7 @@ def loginPage(request):
 
 #######################################################################
 ########################### LOGOUT ################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 def logoutUser(request):
     logout(request)
@@ -323,7 +326,7 @@ def logoutUser(request):
 
 #######################################################################
 ########################### USERPAGE ################################
-
+@requires_csrf_token
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Patient'])
 def userPage(request):
